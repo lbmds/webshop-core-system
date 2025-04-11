@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Mail, Lock, User, Github, Twitter } from "lucide-react";
+import { Mail, Lock, User } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Auth = () => {
@@ -91,7 +91,7 @@ const Auth = () => {
     }
   };
 
-  const handleSocialLogin = async (provider: "github" | "twitter" | "google") => {
+  const handleSocialLogin = async (provider: "google") => {
     try {
       setIsLoading(true);
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -169,7 +169,7 @@ const Auth = () => {
 
                   <Separator className="my-4" />
                   
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="w-full">
                     <Button 
                       type="button" 
                       variant="outline" 
@@ -195,27 +195,7 @@ const Auth = () => {
                           fill="#EA4335"
                         />
                       </svg>
-                      Google
-                    </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      className="w-full flex items-center justify-center gap-2"
-                      onClick={() => handleSocialLogin("github")}
-                      disabled={isLoading}
-                    >
-                      <Github className="h-4 w-4" />
-                      GitHub
-                    </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      className="w-full flex items-center justify-center gap-2"
-                      onClick={() => handleSocialLogin("twitter")}
-                      disabled={isLoading}
-                    >
-                      <Twitter className="h-4 w-4" />
-                      Twitter
+                      Login com Google
                     </Button>
                   </div>
                 </CardContent>
@@ -308,7 +288,7 @@ const Auth = () => {
                   
                   <Separator className="my-4" />
                   
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="w-full">
                     <Button 
                       type="button" 
                       variant="outline" 
@@ -334,27 +314,7 @@ const Auth = () => {
                           fill="#EA4335"
                         />
                       </svg>
-                      Google
-                    </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      className="w-full flex items-center justify-center gap-2"
-                      onClick={() => handleSocialLogin("github")}
-                      disabled={isLoading}
-                    >
-                      <Github className="h-4 w-4" />
-                      GitHub
-                    </Button>
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      className="w-full flex items-center justify-center gap-2"
-                      onClick={() => handleSocialLogin("twitter")}
-                      disabled={isLoading}
-                    >
-                      <Twitter className="h-4 w-4" />
-                      Twitter
+                      Cadastrar com Google
                     </Button>
                   </div>
                 </CardContent>

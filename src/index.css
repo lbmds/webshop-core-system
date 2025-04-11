@@ -14,24 +14,27 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 212 100% 48%;
+    /* Alterado para vermelho inspirado na logo NOVA Igreja Batista */
+    --primary: 0 80% 40%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Alterado para amarelo para o fundo da logo */
+    --secondary: 42 100% 60%;
+    --secondary-foreground: 0 85% 20%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Alterado para amarelo para fazer contraste com outros elementos */
+    --accent: 42 100% 90%;
+    --accent-foreground: 0 85% 20%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 0 80% 40%;
 
     --radius: 0.5rem;
   }
@@ -55,4 +58,22 @@
 
 .category-badge {
   @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80;
+}
+
+/* Efeito de círculo amarelo na logo */
+.logo-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-circle::before {
+  content: "";
+  background-color: hsl(42, 100%, 60%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -1;
 }

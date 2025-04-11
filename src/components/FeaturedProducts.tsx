@@ -23,12 +23,12 @@ interface FeaturedProductsProps {
 
 const FeaturedProducts = ({ title, products, viewAllLink }: FeaturedProductsProps) => {
   return (
-    <section className="py-12">
+    <section className="py-12 bg-accent">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">{title}</h2>
+          <h2 className="text-2xl font-bold text-secondary-foreground">{title}</h2>
           <Link to={viewAllLink} className="text-primary flex items-center hover:underline">
-            View all <ChevronRight className="h-4 w-4 ml-1" />
+            Ver todos <ChevronRight className="h-4 w-4 ml-1" />
           </Link>
         </div>
         

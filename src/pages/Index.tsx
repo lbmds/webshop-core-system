@@ -4,45 +4,46 @@ import FeaturedCategories from "@/components/FeaturedCategories";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Book, Gift, Bible, Bookmark, Video, Music } from "lucide-react";
 
 const Index = () => {
   // Mock data for categories
   const categories = [
     {
       id: 1,
-      name: "Electronics",
-      image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=1001&auto=format&fit=crop",
-      productCount: 128
+      name: "Bíblias",
+      image: "https://images.unsplash.com/photo-1585860180271-c396f69d6fdf?q=80&w=1470&auto=format&fit=crop",
+      productCount: 48
     },
     {
       id: 2,
-      name: "Clothing",
-      image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=1470&auto=format&fit=crop",
-      productCount: 243
+      name: "Livros",
+      image: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1470&auto=format&fit=crop",
+      productCount: 124
     },
     {
       id: 3,
-      name: "Home & Kitchen",
-      image: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=987&auto=format&fit=crop",
-      productCount: 195
+      name: "Estudos",
+      image: "https://images.unsplash.com/photo-1546074177-31bfa593f731?q=80&w=1374&auto=format&fit=crop",
+      productCount: 86
     },
     {
       id: 4,
-      name: "Beauty",
-      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1480&auto=format&fit=crop",
-      productCount: 87
+      name: "Música",
+      image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1470&auto=format&fit=crop",
+      productCount: 57
     },
     {
       id: 5,
-      name: "Sports",
-      image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1470&auto=format&fit=crop",
-      productCount: 112
+      name: "Presentes",
+      image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=1470&auto=format&fit=crop",
+      productCount: 42
     },
     {
       id: 6,
-      name: "Books",
-      image: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1470&auto=format&fit=crop",
-      productCount: 76
+      name: "Mídia Digital",
+      image: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=1470&auto=format&fit=crop",
+      productCount: 33
     }
   ];
   
@@ -50,38 +51,38 @@ const Index = () => {
   const featuredProducts = [
     {
       id: 1,
-      name: "Premium Wireless Headphones",
-      price: 199.99,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1470&auto=format&fit=crop",
-      category: "Electronics",
-      rating: 4.5,
+      name: "Bíblia de Estudo Aplicação Pessoal",
+      price: 159.99,
+      image: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1470&auto=format&fit=crop",
+      category: "Bíblias",
+      rating: 4.8,
       isNew: true
     },
     {
       id: 2,
-      name: "Ultra HD Smart TV 55\"",
-      price: 699.99,
-      originalPrice: 899.99,
-      image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=1prolifteroduct5.x=0&y=0&ixlib=rb-4.0.3&crop=entropy&cs=tinysrgb",
-      category: "Electronics",
-      rating: 4.8,
+      name: "Dicionário Bíblico Ilustrado",
+      price: 89.99,
+      originalPrice: 119.99,
+      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1374&auto=format&fit=crop",
+      category: "Livros",
+      rating: 4.7,
       isOnSale: true
     },
     {
       id: 3,
-      name: "Professional DSLR Camera",
-      price: 1299.99,
-      image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?q=80&w=1470&auto=format&fit=crop",
-      category: "Electronics",
-      rating: 4.7
+      name: "Curso de Teologia Básica",
+      price: 249.99,
+      image: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=1470&auto=format&fit=crop",
+      category: "Estudos",
+      rating: 4.9
     },
     {
       id: 4,
-      name: "Smartwatch Series 5",
-      price: 349.99,
-      originalPrice: 399.99,
-      image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=1472&auto=format&fit=crop",
-      category: "Electronics",
+      name: "Bíblia Sagrada Letra Grande",
+      price: 79.99,
+      originalPrice: 99.99,
+      image: "https://images.unsplash.com/photo-1581074817932-3fecc307e8b3?q=80&w=1470&auto=format&fit=crop",
+      category: "Bíblias",
       rating: 4.6,
       isOnSale: true
     }
@@ -91,38 +92,38 @@ const Index = () => {
   const newArrivals = [
     {
       id: 5,
-      name: "Casual Denim Jacket",
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1036&auto=format&fit=crop",
-      category: "Clothing",
+      name: "Hinário Edição Especial",
+      price: 49.99,
+      image: "https://images.unsplash.com/photo-1465225314224-587cd83d322b?q=80&w=1470&auto=format&fit=crop",
+      category: "Música",
       rating: 4.3,
       isNew: true
     },
     {
       id: 6,
-      name: "Natural Bamboo Side Table",
-      price: 129.99,
-      image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?q=80&w=1374&auto=format&fit=crop",
-      category: "Home & Kitchen",
+      name: "Kit Marcadores Bíblicos",
+      price: 29.99,
+      image: "https://images.unsplash.com/photo-1605020420620-20c943cc4669?q=80&w=1470&auto=format&fit=crop",
+      category: "Presentes",
       rating: 4.2,
       isNew: true
     },
     {
       id: 7,
-      name: "Organic Face Serum",
-      price: 49.99,
-      image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=987&auto=format&fit=crop",
-      category: "Beauty",
+      name: "Devocional Diário Anual",
+      price: 59.99,
+      image: "https://images.unsplash.com/photo-1506784926709-22f1ec395907?q=80&w=1468&auto=format&fit=crop",
+      category: "Livros",
       rating: 4.5,
       isNew: true
     },
     {
       id: 8,
-      name: "Fitness Smart Band",
-      price: 59.99,
-      image: "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?q=80&w=1035&auto=format&fit=crop",
-      category: "Sports",
-      rating: 4.1,
+      name: "Série de Estudos em Vídeo",
+      price: 119.99,
+      image: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?q=80&w=1374&auto=format&fit=crop",
+      category: "Mídia Digital",
+      rating: 4.7,
       isNew: true
     }
   ];
@@ -130,24 +131,24 @@ const Index = () => {
   // Benefits section data
   const benefits = [
     {
-      icon: "🚚",
-      title: "Free Shipping",
-      description: "On all orders over $50"
+      icon: <Bible className="h-8 w-8" />,
+      title: "Material de Qualidade",
+      description: "Selecionados por especialistas"
     },
     {
-      icon: "🔄",
-      title: "Easy Returns",
-      description: "30 day return policy"
+      icon: <Gift className="h-8 w-8" />,
+      title: "Embalagem Especial",
+      description: "Para presentes"
     },
     {
-      icon: "🔒",
-      title: "Secure Payment",
-      description: "Safe & encrypted checkout"
+      icon: <Bookmark className="h-8 w-8" />,
+      title: "Recursos Exclusivos",
+      description: "Para membros da igreja"
     },
     {
-      icon: "💬",
-      title: "24/7 Support",
-      description: "We're here to help"
+      icon: <Book className="h-8 w-8" />,
+      title: "Variedade de Edições",
+      description: "Para diferentes necessidades"
     }
   ];
   
@@ -156,12 +157,12 @@ const Index = () => {
       <Hero />
       
       {/* Benefits */}
-      <section className="bg-secondary py-8">
+      <section className="bg-white py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {benefits.map((benefit, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="text-3xl mb-2">{benefit.icon}</div>
+                <div className="text-primary mb-2">{benefit.icon}</div>
                 <h3 className="font-medium text-sm md:text-base">{benefit.title}</h3>
                 <p className="text-xs md:text-sm text-muted-foreground">{benefit.description}</p>
               </div>
@@ -173,13 +174,13 @@ const Index = () => {
       <FeaturedCategories categories={categories} />
       
       <FeaturedProducts
-        title="Featured Products"
+        title="Produtos Destacados"
         products={featuredProducts}
         viewAllLink="/products"
       />
       
       <FeaturedProducts
-        title="New Arrivals"
+        title="Novidades"
         products={newArrivals}
         viewAllLink="/new"
       />
@@ -188,19 +189,19 @@ const Index = () => {
       <section className="bg-primary py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Join Our Newsletter
+            Junte-se à Nossa Newsletter
           </h2>
           <p className="text-white/80 max-w-lg mx-auto mb-8">
-            Subscribe to get special offers, free giveaways, and product announcements.
+            Inscreva-se para receber novidades, ofertas especiais e anúncios de novos produtos.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
             <input
               type="email"
-              placeholder="Your email address"
+              placeholder="Seu email"
               className="flex-grow px-4 py-2 rounded-md"
             />
-            <Button className="bg-white text-primary hover:bg-white/90">
-              Subscribe
+            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              Inscrever-se
             </Button>
           </div>
         </div>

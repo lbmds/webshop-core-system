@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter } from "lucide-react";
+import Logo from "./Logo";
 
 const Footer = () => {
   return (
@@ -8,34 +9,36 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">ShopSmart</h3>
-            <p className="text-sm text-muted-foreground">
-              Your one-stop shop for quality products at the best prices. We're committed to providing an exceptional shopping experience.
+            <div className="mb-4">
+              <Logo variant="dark" />
+            </div>
+            <p className="text-sm text-secondary-foreground/80">
+              Sua fonte confiável para livros, Bíblias e materiais de estudo. Comprometidos em fornecer recursos de qualidade para sua jornada espiritual.
             </p>
           </div>
           
           <div>
-            <h3 className="font-bold text-lg mb-4">Shop</h3>
+            <h3 className="font-bold text-lg mb-4 text-secondary-foreground">Loja</h3>
             <ul className="space-y-2">
-              <li><Link to="/products" className="text-sm hover:text-primary">All Products</Link></li>
-              <li><Link to="/categories" className="text-sm hover:text-primary">Categories</Link></li>
-              <li><Link to="/deals" className="text-sm hover:text-primary">Deals & Discounts</Link></li>
-              <li><Link to="/new" className="text-sm hover:text-primary">New Arrivals</Link></li>
+              <li><Link to="/products" className="text-sm hover:text-primary">Todos os Produtos</Link></li>
+              <li><Link to="/categories" className="text-sm hover:text-primary">Categorias</Link></li>
+              <li><Link to="/deals" className="text-sm hover:text-primary">Promoções</Link></li>
+              <li><Link to="/new" className="text-sm hover:text-primary">Lançamentos</Link></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="font-bold text-lg mb-4">Customer Service</h3>
+            <h3 className="font-bold text-lg mb-4 text-secondary-foreground">Atendimento</h3>
             <ul className="space-y-2">
-              <li><Link to="/contact" className="text-sm hover:text-primary">Contact Us</Link></li>
-              <li><Link to="/shipping" className="text-sm hover:text-primary">Shipping Info</Link></li>
-              <li><Link to="/returns" className="text-sm hover:text-primary">Returns & Exchanges</Link></li>
-              <li><Link to="/faq" className="text-sm hover:text-primary">FAQ</Link></li>
+              <li><Link to="/contact" className="text-sm hover:text-primary">Fale Conosco</Link></li>
+              <li><Link to="/shipping" className="text-sm hover:text-primary">Entrega</Link></li>
+              <li><Link to="/returns" className="text-sm hover:text-primary">Trocas e Devoluções</Link></li>
+              <li><Link to="/faq" className="text-sm hover:text-primary">Perguntas Frequentes</Link></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="font-bold text-lg mb-4">Connect With Us</h3>
+            <h3 className="font-bold text-lg mb-4 text-secondary-foreground">Conecte-se Conosco</h3>
             <div className="flex space-x-4 mb-4">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
                 <Facebook size={20} />
@@ -48,29 +51,29 @@ const Footer = () => {
               </a>
             </div>
             <div>
-              <h4 className="font-medium text-sm mb-2">Subscribe to our newsletter</h4>
+              <h4 className="font-medium text-sm mb-2 text-secondary-foreground">Inscreva-se em nossa newsletter</h4>
               <form className="flex">
                 <input
                   type="email"
-                  placeholder="Your email"
+                  placeholder="Seu email"
                   className="px-3 py-2 border rounded-l-md w-full text-sm"
                 />
                 <button
                   type="submit"
                   className="bg-primary text-white px-4 py-2 rounded-r-md text-sm"
                 >
-                  Subscribe
+                  Inscrever
                 </button>
               </form>
             </div>
           </div>
         </div>
         
-        <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} ShopSmart. All rights reserved.</p>
+        <div className="border-t border-secondary-foreground/10 mt-8 pt-8 text-center text-sm text-secondary-foreground/70">
+          <p>&copy; {new Date().getFullYear()} NOVA Igreja Batista Grande Circular. Todos os direitos reservados.</p>
           <div className="flex justify-center mt-2 space-x-4">
-            <Link to="/privacy" className="hover:text-primary">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-primary">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-primary">Política de Privacidade</Link>
+            <Link to="/terms" className="hover:text-primary">Termos de Serviço</Link>
           </div>
         </div>
       </div>

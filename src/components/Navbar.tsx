@@ -5,6 +5,7 @@ import { Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,16 +17,16 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-primary">ShopSmart</Link>
+            <Logo />
           </div>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <Link to="/" className="text-sm font-medium transition-colors hover:text-primary">Home</Link>
-            <Link to="/products" className="text-sm font-medium transition-colors hover:text-primary">Products</Link>
-            <Link to="/categories" className="text-sm font-medium transition-colors hover:text-primary">Categories</Link>
-            <Link to="/about" className="text-sm font-medium transition-colors hover:text-primary">About</Link>
-            <Link to="/contact" className="text-sm font-medium transition-colors hover:text-primary">Contact</Link>
+            <Link to="/products" className="text-sm font-medium transition-colors hover:text-primary">Produtos</Link>
+            <Link to="/categories" className="text-sm font-medium transition-colors hover:text-primary">Categorias</Link>
+            <Link to="/about" className="text-sm font-medium transition-colors hover:text-primary">Sobre</Link>
+            <Link to="/contact" className="text-sm font-medium transition-colors hover:text-primary">Contato</Link>
           </nav>
           
           {/* Search, Cart, and User Icons */}
@@ -34,7 +35,7 @@ const Navbar = () => {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder="Buscar produtos..."
                 className="pl-8 w-[200px] lg:w-[300px] rounded-md"
               />
             </div>
@@ -71,15 +72,15 @@ const Navbar = () => {
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder="Buscar produtos..."
                 className="pl-8 w-full rounded-md"
               />
             </div>
             <Link to="/" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link to="/products" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Products</Link>
-            <Link to="/categories" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Categories</Link>
-            <Link to="/about" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>About</Link>
-            <Link to="/contact" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+            <Link to="/products" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Produtos</Link>
+            <Link to="/categories" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
+            <Link to="/about" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Sobre</Link>
+            <Link to="/contact" className="block py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Contato</Link>
           </div>
         )}
       </div>

@@ -34,9 +34,9 @@ const Profile = () => {
         if (!user) return;
 
         const { data, error } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", user.id)
+          .from('users')
+          .select('*')
+          .eq('id', user.id)
           .single();
 
         if (error) throw error;
@@ -62,7 +62,7 @@ const Profile = () => {
       setUpdating(true);
       
       const { error } = await supabase
-        .from("users")
+        .from('users')
         .update({
           first_name: profile.first_name,
           last_name: profile.last_name,
@@ -72,7 +72,7 @@ const Profile = () => {
           address_state: profile.address_state,
           address_zip: profile.address_zip
         })
-        .eq("id", user.id);
+        .eq('id', user.id);
 
       if (error) throw error;
       

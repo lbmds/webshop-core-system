@@ -4,7 +4,7 @@ import FeaturedCategories from "@/components/FeaturedCategories";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Book, Gift, Bible, Bookmark, Video, Music } from "lucide-react";
+import { Book, Gift, BookOpen, Bookmark, Video, Music } from "lucide-react";
 
 const Index = () => {
   // Mock data for categories
@@ -131,7 +131,7 @@ const Index = () => {
   // Benefits section data
   const benefits = [
     {
-      icon: <Bible className="h-8 w-8" />,
+      icon: <BookOpen className="h-8 w-8" />,
       title: "Material de Qualidade",
       description: "Selecionados por especialistas"
     },

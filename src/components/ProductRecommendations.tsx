@@ -14,6 +14,7 @@ interface Product {
   rating: number;
   is_on_sale: boolean;
   original_price?: number;
+  category: string;
 }
 
 interface ProductRecommendationsProps {
@@ -81,7 +82,17 @@ const ProductRecommendations = ({ productId }: ProductRecommendationsProps) => {
         <h2 className="text-xl font-bold mb-4">Produtos Recomendados</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {recommendations.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+              key={product.id}
+              id={Number(product.id)}
+              name={product.name}
+              price={product.price}
+              originalPrice={product.original_price}
+              image={product.image_url}
+              category={product.category}
+              rating={product.rating}
+              isOnSale={product.is_on_sale}
+            />
           ))}
         </div>
       </CardContent>

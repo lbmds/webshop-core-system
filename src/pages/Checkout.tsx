@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface CartItem {
   id: string | number;
@@ -24,6 +25,8 @@ const Checkout = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [attemptCount, setAttemptCount] = useState(0);
 
   useEffect(() => {
     // Initialize MercadoPago with the public key
@@ -56,34 +59,39 @@ const Checkout = () => {
   // Create payment preference
   useEffect(() => {
     const createPreference = async () => {
-      if (cartItems.length === 0) return;
+      if (cartItems.length === 0 || attemptCount > 3) return;
       
       try {
         setIsLoading(true);
         setPaymentError(null);
         
         // Check authentication
-        if (!session || !user) {
-          toast.error("Você precisa estar logado para finalizar a compra");
-          navigate('/auth');
+        if (!session?.access_token || !user) {
+          console.log("User not authenticated, showing login dialog");
+          setShowLoginDialog(true);
+          setIsLoading(false);
           return;
         }
         
-        console.log("Creating payment preference with user session");
+        console.log("Creating payment preference with valid session token");
         
         // Call the edge function with authorization header
-        const response = await supabase.functions.invoke('create-payment', {
+        const { data, error } = await supabase.functions.invoke('create-payment', {
           body: { items: cartItems },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`
+          }
         });
         
-        if (response.error) {
-          throw new Error(response.error.message || 'Erro ao criar preferência de pagamento');
+        if (error) {
+          console.error("Payment function error:", error);
+          throw new Error(error.message || 'Erro ao criar preferência de pagamento');
         }
         
-        console.log("Payment preference response:", response.data);
+        console.log("Payment preference response:", data);
         
-        if (response.data && response.data.id) {
-          setPreferenceId(response.data.id);
+        if (data && data.id) {
+          setPreferenceId(data.id);
         } else {
           throw new Error('Resposta inválida do servidor de pagamento');
         }
@@ -91,13 +99,16 @@ const Checkout = () => {
         console.error("Payment error:", error);
         setPaymentError(error.message);
         toast.error(`Erro: ${error.message}`);
+        
+        // Increment attempt counter
+        setAttemptCount(prev => prev + 1);
       } finally {
         setIsLoading(false);
       }
     };
 
     createPreference();
-  }, [cartItems, navigate, session, user]);
+  }, [cartItems, user, session, attemptCount]);
 
   // Calculate totals
   const subtotal = cartItems.reduce(
@@ -112,43 +123,12 @@ const Checkout = () => {
   const handleRetry = () => {
     setPaymentError(null);
     setPreferenceId(null);
-    // Try to create preference again
-    const createPreference = async () => {
-      if (cartItems.length === 0) return;
-      
-      try {
-        setIsLoading(true);
-        
-        // Check authentication
-        if (!session || !user) {
-          toast.error("Você precisa estar logado para finalizar a compra");
-          navigate('/auth');
-          return;
-        }
-        
-        // Call the edge function
-        const response = await supabase.functions.invoke('create-payment', {
-          body: { items: cartItems },
-        });
-        
-        if (response.error) {
-          throw new Error(response.error.message || 'Erro ao criar preferência de pagamento');
-        }
-        
-        if (response.data && response.data.id) {
-          setPreferenceId(response.data.id);
-        } else {
-          throw new Error('Resposta inválida do servidor de pagamento');
-        }
-      } catch (error: any) {
-        setPaymentError(error.message);
-        toast.error(`Erro: ${error.message}`);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    setAttemptCount(prev => prev + 1);
+  }
 
-    createPreference();
+  // Handle login redirect
+  const handleGoToLogin = () => {
+    navigate('/auth', { state: { returnTo: '/checkout' } });
   }
 
   if (isLoading) {
@@ -254,6 +234,21 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+
+      {/* Login Dialog */}
+      <Dialog open={showLoginDialog} onOpenChange={setShowLoginDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Faça login para continuar</DialogTitle>
+            <DialogDescription>
+              Você precisa estar logado para finalizar sua compra.
+            </DialogDescription>
+          </DialogHeader>
+          <Button onClick={handleGoToLogin} className="w-full mt-4">
+            Ir para o login
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

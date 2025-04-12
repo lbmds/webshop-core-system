@@ -17,9 +17,6 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Get the authorization header
-    const authorization = req.headers.get('Authorization')
-    
     // Get MercadoPago access token from environment
     const mercadoPagoAccessToken = Deno.env.get('MERCADOPAGO_ACCESS_TOKEN')
     
@@ -27,11 +24,6 @@ Deno.serve(async (req) => {
       throw new Error('Missing MercadoPago access token')
     }
     
-    // Initialize Supabase client for authentication validation
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') || ''
-    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') || ''
-    
-    // We don't need to verify JWT for this function since we're getting user info from the session
     // Get items from request body
     const { items } = await req.json()
     
@@ -39,23 +31,47 @@ Deno.serve(async (req) => {
       throw new Error('Invalid cart items')
     }
     
-    // Initialize Supabase client
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      global: {
-        headers: authorization ? { Authorization: authorization } : {},
-      },
-    })
+    // Initialize Supabase client for authentication validation
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') || ''
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
     
-    // Verify user session
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-    
-    if (userError || !user) {
-      console.error('Authentication error:', userError?.message)
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error('Missing Supabase configuration')
+    }
+
+    // Get the authorization header
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      console.error('No authorization header provided')
       return new Response(
-        JSON.stringify({ error: 'Unauthorized - User not authenticated' }), 
+        JSON.stringify({ error: 'Unauthorized - No authorization header' }), 
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+    
+    // Extract JWT token from header
+    const token = authHeader.replace('Bearer ', '')
+    
+    // Initialize Supabase admin client to verify the token
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
+    
+    // Verify the JWT token and get user information
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token)
+    
+    if (authError || !user) {
+      console.error('Authentication error:', authError?.message || 'User not found')
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - Invalid token' }), 
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
+    console.log('User authenticated successfully:', user.id)
     
     // Configure MercadoPago
     const client = new MercadoPagoConfig({ accessToken: mercadoPagoAccessToken })

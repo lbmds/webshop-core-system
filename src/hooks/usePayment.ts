@@ -60,11 +60,22 @@ export const usePayment = ({ cartItems, address, shippingMethod }: UsePaymentPro
       
       console.log("Creating payment preference with valid session token");
       
-      // Call the payment service
+      // Make sure we pass the complete address object with all required properties
+      const completeAddress: AddressFormValues = {
+        street: address.street,
+        number: address.number,
+        complement: address.complement || '',
+        neighborhood: address.neighborhood,
+        city: address.city,
+        state: address.state,
+        zipCode: address.zipCode
+      };
+      
+      // Call the payment service with the complete address
       const data = await createPaymentPreference(
         {
           cartItems,
-          shippingAddress: address,
+          shippingAddress: completeAddress,
           shippingMethod
         },
         session.access_token

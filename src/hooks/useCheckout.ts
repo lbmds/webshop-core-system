@@ -57,15 +57,18 @@ export const useCheckout = () => {
             neighborhood = addressParts[2]?.trim() || '';
           }
           
-          setAddress({
+          // Create a properly typed AddressFormValues object with required fields
+          const addressData: AddressFormValues = {
             street,
             number,
-            complement,
-            neighborhood,
+            complement: complement || '',
+            neighborhood: neighborhood || '',
             city: data.address_city || '',
             state: data.address_state || '',
             zipCode: data.address_zip || '',
-          });
+          };
+          
+          setAddress(addressData);
         }
       } catch (error) {
         console.error('Error loading address:', error);

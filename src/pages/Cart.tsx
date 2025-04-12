@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Minus, Plus, Trash2, ArrowRight } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowRight, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -16,7 +15,6 @@ interface CartItem {
 }
 
 const Cart = () => {
-  // Mock cart data
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -54,7 +52,6 @@ const Cart = () => {
   
   const applyCoupon = () => {
     setIsApplyingCoupon(true);
-    // Simulate API call
     setTimeout(() => {
       setIsApplyingCoupon(false);
       if (couponCode.toLowerCase() === "discount20") {
@@ -66,7 +63,6 @@ const Cart = () => {
     }, 1000);
   };
   
-  // Calculate totals
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -77,17 +73,16 @@ const Cart = () => {
   
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+      <h1 className="text-3xl font-bold mb-6">Seu Carrinho</h1>
       
       {cartItems.length > 0 ? (
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Cart items */}
           <div className="lg:w-2/3">
             <div className="border rounded-md overflow-hidden">
               <div className="bg-secondary p-4 font-medium grid grid-cols-12 gap-4 hidden md:grid">
-                <div className="col-span-6">Product</div>
-                <div className="col-span-2 text-center">Price</div>
-                <div className="col-span-2 text-center">Quantity</div>
+                <div className="col-span-6">Produto</div>
+                <div className="col-span-2 text-center">Preço</div>
+                <div className="col-span-2 text-center">Quantidade</div>
                 <div className="col-span-2 text-right">Total</div>
               </div>
               
@@ -114,11 +109,11 @@ const Cart = () => {
                       </div>
                     </div>
                     <div className="col-span-4 md:col-span-2 md:text-center">
-                      <div className="md:hidden text-sm text-muted-foreground mb-1">Price:</div>
+                      <div className="md:hidden text-sm text-muted-foreground mb-1">Preço:</div>
                       ${item.price.toFixed(2)}
                     </div>
                     <div className="col-span-4 md:col-span-2 md:text-center">
-                      <div className="md:hidden text-sm text-muted-foreground mb-1">Quantity:</div>
+                      <div className="md:hidden text-sm text-muted-foreground mb-1">Quantidade:</div>
                       <div className="flex items-center border rounded-md inline-flex">
                         <Button
                           variant="ghost"
@@ -156,36 +151,34 @@ const Cart = () => {
                 </div>
               ))}
               
-              {/* Continue shopping */}
               <div className="p-4 border-t bg-secondary">
                 <Link
                   to="/products"
                   className="text-primary hover:underline inline-flex items-center"
                 >
                   <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-                  Continue Shopping
+                  Continuar Comprando
                 </Link>
               </div>
             </div>
           </div>
           
-          {/* Order summary */}
           <div className="lg:w-1/3">
             <div className="border rounded-md p-6">
-              <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+              <h2 className="text-xl font-bold mb-4">Resumo do Pedido</h2>
               
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>R$ {subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Shipping</span>
-                  <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
+                  <span className="text-muted-foreground">Frete</span>
+                  <span>{shipping === 0 ? "Grátis" : `R$ ${shipping.toFixed(2)}`}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Tax</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <span className="text-muted-foreground">Impostos</span>
+                  <span>R$ {tax.toFixed(2)}</span>
                 </div>
               </div>
               
@@ -193,14 +186,13 @@ const Cart = () => {
               
               <div className="flex justify-between font-bold text-lg mb-6">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>R$ {total.toFixed(2)}</span>
               </div>
               
-              {/* Coupon code */}
               <div className="mb-6">
                 <div className="flex space-x-2">
                   <Input
-                    placeholder="Enter coupon code"
+                    placeholder="Inserir cupom de desconto"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
@@ -209,24 +201,28 @@ const Cart = () => {
                     onClick={applyCoupon} 
                     disabled={!couponCode || isApplyingCoupon}
                   >
-                    Apply
+                    Aplicar
                   </Button>
                 </div>
                 <div className="text-xs mt-2 text-muted-foreground">
-                  Try "DISCOUNT20" for a demo discount
+                  Tente "DISCOUNT20" para um desconto de demonstração
                 </div>
               </div>
               
               <Button className="w-full" size="lg" asChild>
-                <Link to="/checkout">Proceed to Checkout</Link>
+                <Link to="/checkout">
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  Finalizar Compra
+                </Link>
               </Button>
               
               <div className="mt-6 text-center text-xs text-muted-foreground">
-                <p className="mb-2">We accept the following payment methods:</p>
+                <p className="mb-2">Aceitamos as seguintes formas de pagamento:</p>
                 <div className="flex justify-center space-x-2">
                   <span className="px-2 py-1 bg-secondary rounded-md">Visa</span>
                   <span className="px-2 py-1 bg-secondary rounded-md">Mastercard</span>
-                  <span className="px-2 py-1 bg-secondary rounded-md">PayPal</span>
+                  <span className="px-2 py-1 bg-secondary rounded-md">PIX</span>
+                  <span className="px-2 py-1 bg-secondary rounded-md">Boleto</span>
                 </div>
               </div>
             </div>
@@ -235,10 +231,10 @@ const Cart = () => {
       ) : (
         <div className="text-center py-12">
           <div className="text-5xl mb-4">🛒</div>
-          <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
-          <p className="text-muted-foreground mb-8">Looks like you haven't added any products to your cart yet.</p>
+          <h2 className="text-2xl font-bold mb-2">Seu carrinho está vazio</h2>
+          <p className="text-muted-foreground mb-8">Parece que você ainda não adicionou nenhum produto ao seu carrinho.</p>
           <Button asChild size="lg">
-            <Link to="/products">Start Shopping</Link>
+            <Link to="/products">Começar a Comprar</Link>
           </Button>
         </div>
       )}

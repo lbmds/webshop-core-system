@@ -9,7 +9,7 @@ interface CartItem {
   quantity: number;
 }
 
-export interface ShippingAddress {
+export interface AddressFormValues {
   street: string;
   number: string;
   complement?: string;
@@ -28,7 +28,7 @@ export interface ShippingMethod {
 
 interface PaymentPreferenceOptions {
   cartItems: CartItem[];
-  shippingAddress?: ShippingAddress;
+  shippingAddress?: AddressFormValues;
   shippingMethod?: ShippingMethod;
 }
 

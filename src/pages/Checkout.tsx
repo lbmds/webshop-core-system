@@ -9,7 +9,6 @@ import { CheckoutStep } from '@/components/checkout/CheckoutStepper';
 import CheckoutShipping from '@/components/checkout/CheckoutShipping';
 import CheckoutPayment from '@/components/checkout/CheckoutPayment';
 import { useCheckout } from '@/hooks/useCheckout';
-import { Card } from '@/components/ui/card';
 
 const Checkout = () => {
   const navigate = useNavigate();

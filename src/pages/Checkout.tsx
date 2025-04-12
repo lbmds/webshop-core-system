@@ -22,7 +22,7 @@ const Checkout = () => {
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   useEffect(() => {
-    initMercadoPago('TEST-6a88cdcc-fb48-42e2-a6a5-8e3bc27b6437', { locale: 'pt-BR' });
+    initMercadoPago('TEST-4b0eb3ed-eabe-467e-95ea-99010b0aa403', { locale: 'pt-BR' });
   }, []);
 
   useEffect(() => {

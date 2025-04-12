@@ -24,8 +24,8 @@ Deno.serve(async (req) => {
       throw new Error('Missing MercadoPago access token')
     }
     
-    // Get items from request body
-    const { items } = await req.json()
+    // Get request body
+    const { items, shippingAddress, shippingMethod } = await req.json()
     
     if (!items || !Array.isArray(items) || items.length === 0) {
       throw new Error('Invalid cart items')
@@ -77,8 +77,18 @@ Deno.serve(async (req) => {
     const client = new MercadoPagoConfig({ accessToken: mercadoPagoAccessToken })
     const preference = new Preference(client)
     
-    // Base URL for callbacks (assuming a secure HTTPS URL for production)
+    // Base URL for callbacks
     const baseUrl = Deno.env.get('SITE_URL') || 'https://8481aab8-f1b8-4c1a-81a1-43479e4da6a4.lovableproject.com'
+    
+    // Format shipping address for MercadoPago
+    let formattedAddress = '';
+    if (shippingAddress) {
+      formattedAddress = `${shippingAddress.street}, ${shippingAddress.number}`;
+      if (shippingAddress.complement) {
+        formattedAddress += ` - ${shippingAddress.complement}`;
+      }
+      formattedAddress += `, ${shippingAddress.neighborhood}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.zipCode}`;
+    }
     
     // Create payment preference
     const preferenceData = await preference.create({
@@ -91,6 +101,17 @@ Deno.serve(async (req) => {
           currency_id: 'BRL',
           picture_url: item.image,
         })),
+        shipments: {
+          cost: shippingMethod?.price || 0,
+          mode: "not_specified",
+        },
+        payer: {
+          address: shippingAddress ? {
+            street_name: shippingAddress.street,
+            street_number: shippingAddress.number,
+            zip_code: shippingAddress.zipCode
+          } : undefined
+        },
         back_urls: {
           success: `${baseUrl}/checkout/success`,
           failure: `${baseUrl}/checkout/failure`,
@@ -99,6 +120,11 @@ Deno.serve(async (req) => {
         auto_return: 'approved',
         statement_descriptor: 'E-Commerce Store',
         external_reference: user.id,
+        metadata: {
+          user_id: user.id,
+          shipping_address: formattedAddress,
+          shipping_method: shippingMethod?.name || 'Standard'
+        }
       },
     })
     

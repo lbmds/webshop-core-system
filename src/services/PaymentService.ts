@@ -9,12 +9,41 @@ interface CartItem {
   quantity: number;
 }
 
+export interface ShippingAddress {
+  street: string;
+  number: string;
+  complement?: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface ShippingMethod {
+  id: string;
+  name: string;
+  price: number;
+  estimatedDays: string;
+}
+
+interface PaymentPreferenceOptions {
+  cartItems: CartItem[];
+  shippingAddress?: ShippingAddress;
+  shippingMethod?: ShippingMethod;
+}
+
 export const createPaymentPreference = async (
-  cartItems: CartItem[], 
+  options: PaymentPreferenceOptions,
   accessToken: string
 ): Promise<{ id: string }> => {
+  const { cartItems, shippingAddress, shippingMethod } = options;
+
   const { data, error } = await supabase.functions.invoke('create-payment', {
-    body: { items: cartItems },
+    body: { 
+      items: cartItems,
+      shippingAddress,
+      shippingMethod
+    },
     headers: {
       Authorization: `Bearer ${accessToken}`
     }

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { ShippingMethod } from '@/components/checkout/ShippingMethodSelector';
 
 interface CartItem {
   id: string | number;
@@ -12,6 +13,7 @@ interface CartItem {
 export const useCart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [shippingMethod, setShippingMethod] = useState<ShippingMethod | null>(null);
 
   useEffect(() => {
     // Mock data - in a real app, this would come from a real cart/api
@@ -41,7 +43,12 @@ export const useCart = () => {
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const shipping = subtotal > 100 ? 0 : 9.99;
+  
+  // Shipping price based on selected method or default calculation
+  const shipping = shippingMethod 
+    ? shippingMethod.price 
+    : subtotal > 100 ? 0 : 9.99;
+    
   const tax = subtotal * 0.1; // 10% tax
   const total = subtotal + shipping + tax;
 
@@ -51,6 +58,8 @@ export const useCart = () => {
     subtotal,
     shipping,
     tax,
-    total
+    total,
+    shippingMethod,
+    setShippingMethod
   };
 };

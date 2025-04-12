@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
@@ -22,16 +21,11 @@ const Checkout = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-  // Inicializa o MercadoPago - Substitua pelo seu public key
   useEffect(() => {
-    // Public key do MercadoPago Brasil - esse pode ser exposto no cliente
     initMercadoPago('TEST-6a88cdcc-fb48-42e2-a6a5-8e3bc27b6437', { locale: 'pt-BR' });
   }, []);
 
-  // Busca os itens do carrinho
   useEffect(() => {
-    // Para demonstração, usaremos os mesmos dados mockados do Cart.tsx
-    // Em produção, isso seria carregado do Supabase
     const mockCartItems = [
       {
         id: 1,
@@ -53,7 +47,6 @@ const Checkout = () => {
     setIsLoading(false);
   }, []);
 
-  // Cria preferência de pagamento quando os itens do carrinho são carregados
   useEffect(() => {
     const createPreference = async () => {
       if (cartItems.length === 0) return;
@@ -97,7 +90,6 @@ const Checkout = () => {
     createPreference();
   }, [cartItems, navigate]);
 
-  // Calcular totais
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -120,7 +112,6 @@ const Checkout = () => {
       <h1 className="text-3xl font-bold mb-6">Checkout</h1>
       
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Resumo do pedido */}
         <div className="lg:w-2/3">
           <div className="border rounded-md overflow-hidden">
             <div className="bg-secondary p-4 font-medium">
@@ -155,7 +146,6 @@ const Checkout = () => {
           </div>
         </div>
         
-        {/* Pagamento */}
         <div className="lg:w-1/3">
           <div className="border rounded-md p-6">
             <h2 className="text-xl font-bold mb-4">Resumo</h2>
@@ -186,7 +176,6 @@ const Checkout = () => {
               <div className="w-full flex justify-center">
                 <Wallet 
                   initialization={{ preferenceId }} 
-                  customization={{ texts: { valueProp: 'smart_option' } }} 
                 />
               </div>
             ) : (

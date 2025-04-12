@@ -59,8 +59,8 @@ export const useCheckout = () => {
           
           // Create a properly typed AddressFormValues object with all required fields explicitly set
           const addressData: AddressFormValues = {
-            street: street || '',    // Ensure non-optional with default
-            number: number || '',    // Ensure non-optional with default
+            street: street || '',
+            number: number || '',
             complement: complement || '',
             neighborhood: neighborhood || '',
             city: data.address_city || '',

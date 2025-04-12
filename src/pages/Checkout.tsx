@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface CartItem {
   id: string | number;
@@ -18,14 +19,18 @@ interface CartItem {
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const { user, session } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   useEffect(() => {
-    initMercadoPago('TEST-4b0eb3ed-eabe-467e-95ea-99010b0aa403', { locale: 'pt-BR' });
+    // Initialize MercadoPago with the public key
+    initMercadoPago('TEST-4b0eb3ed-eabe-467e-95ea-99010b0aa403');
   }, []);
 
+  // Load cart items
   useEffect(() => {
     const mockCartItems = [
       {
@@ -48,40 +53,43 @@ const Checkout = () => {
     setIsLoading(false);
   }, []);
 
+  // Create payment preference
   useEffect(() => {
     const createPreference = async () => {
       if (cartItems.length === 0) return;
       
       try {
         setIsLoading(true);
+        setPaymentError(null);
         
-        const session = await supabase.auth.getSession();
-        if (!session.data.session) {
+        // Check authentication
+        if (!session || !user) {
           toast.error("Você precisa estar logado para finalizar a compra");
           navigate('/auth');
           return;
         }
         
-        const response = await fetch(
-          'https://xxnnpoyydwvplgvjawnn.supabase.co/functions/v1/create-payment',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${session.data.session.access_token}`,
-            },
-            body: JSON.stringify({ items: cartItems }),
-          }
-        );
+        console.log("Creating payment preference with user session");
         
-        const data = await response.json();
+        // Call the edge function with authorization header
+        const response = await supabase.functions.invoke('create-payment', {
+          body: { items: cartItems },
+        });
         
-        if (response.ok) {
-          setPreferenceId(data.id);
-        } else {
-          throw new Error(data.error || 'Erro ao criar preferência de pagamento');
+        if (response.error) {
+          throw new Error(response.error.message || 'Erro ao criar preferência de pagamento');
         }
-      } catch (error) {
+        
+        console.log("Payment preference response:", response.data);
+        
+        if (response.data && response.data.id) {
+          setPreferenceId(response.data.id);
+        } else {
+          throw new Error('Resposta inválida do servidor de pagamento');
+        }
+      } catch (error: any) {
+        console.error("Payment error:", error);
+        setPaymentError(error.message);
         toast.error(`Erro: ${error.message}`);
       } finally {
         setIsLoading(false);
@@ -89,8 +97,9 @@ const Checkout = () => {
     };
 
     createPreference();
-  }, [cartItems, navigate]);
+  }, [cartItems, navigate, session, user]);
 
+  // Calculate totals
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -98,6 +107,49 @@ const Checkout = () => {
   const shipping = subtotal > 100 ? 0 : 9.99;
   const tax = subtotal * 0.1; // 10% tax
   const total = subtotal + shipping + tax;
+
+  // Handle retry
+  const handleRetry = () => {
+    setPaymentError(null);
+    setPreferenceId(null);
+    // Try to create preference again
+    const createPreference = async () => {
+      if (cartItems.length === 0) return;
+      
+      try {
+        setIsLoading(true);
+        
+        // Check authentication
+        if (!session || !user) {
+          toast.error("Você precisa estar logado para finalizar a compra");
+          navigate('/auth');
+          return;
+        }
+        
+        // Call the edge function
+        const response = await supabase.functions.invoke('create-payment', {
+          body: { items: cartItems },
+        });
+        
+        if (response.error) {
+          throw new Error(response.error.message || 'Erro ao criar preferência de pagamento');
+        }
+        
+        if (response.data && response.data.id) {
+          setPreferenceId(response.data.id);
+        } else {
+          throw new Error('Resposta inválida do servidor de pagamento');
+        }
+      } catch (error: any) {
+        setPaymentError(error.message);
+        toast.error(`Erro: ${error.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    createPreference();
+  }
 
   if (isLoading) {
     return (
@@ -173,7 +225,17 @@ const Checkout = () => {
               <span>R$ {total.toFixed(2)}</span>
             </div>
             
-            {preferenceId ? (
+            {paymentError ? (
+              <div className="space-y-4">
+                <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-md">
+                  <p className="font-medium">Erro no pagamento</p>
+                  <p className="text-sm">{paymentError}</p>
+                </div>
+                <Button onClick={handleRetry} className="w-full">
+                  Tentar novamente
+                </Button>
+              </div>
+            ) : preferenceId ? (
               <div className="w-full flex justify-center">
                 <Wallet 
                   initialization={{ preferenceId }} 

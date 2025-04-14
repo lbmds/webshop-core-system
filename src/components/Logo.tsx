@@ -58,7 +58,7 @@ const Logo = ({
     large: "text-2xl"
   };
   const logoContent = <>
-      <div className={cn("logo-circle relative", circleSize)}>
+      <div className="">
         <svg width={width} height={height} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10">
           <image href="/lovable-uploads/38ab295d-b8b5-46e1-8261-f552ca0cfb02.png" width="100" height="100" />
         </svg>

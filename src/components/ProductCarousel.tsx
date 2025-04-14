@@ -33,7 +33,17 @@ const ProductCarousel = ({ title, products, viewAllLink }: ProductCarouselProps)
   return (
     <section className="py-12 bordered-section my-8">
       <div className="container mx-auto px-4">
-        <h2 className="section-title">{title}</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="section-title inline-block relative">
+            {title}
+            <span className="absolute bottom-[-8px] left-0 h-1 w-20 bg-primary rounded-full"></span>
+          </h2>
+          {viewAllLink && (
+            <a href={viewAllLink} className="text-primary hover:text-primary/80 text-sm font-medium transition-colors">
+              Ver todos
+            </a>
+          )}
+        </div>
         
         <div className="mt-8">
           <Carousel
@@ -45,8 +55,8 @@ const ProductCarousel = ({ title, products, viewAllLink }: ProductCarouselProps)
           >
             <CarouselContent>
               {products.map((product) => (
-                <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                  <div className="product-card p-1">
+                <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 px-2">
+                  <div className="product-card">
                     <ProductCard {...product} />
                   </div>
                 </CarouselItem>

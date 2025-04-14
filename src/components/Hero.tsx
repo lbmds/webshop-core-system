@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
+import { ShoppingCart, Store } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -23,10 +24,16 @@ const Hero = () => {
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-                <Link to="/products">Comprar Agora</Link>
+                <Link to="/products" className="flex items-center">
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Comprar Agora
+                </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="bg-white/10 text-white border-white/30 hover:bg-white/20">
-                <Link to="/categories">Ver Categorias</Link>
+                <Link to="/admin" className="flex items-center">
+                  <Store className="mr-2 h-5 w-5" />
+                  Área Administrativa
+                </Link>
               </Button>
             </div>
           </div>

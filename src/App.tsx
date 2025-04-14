@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminLayout from "./components/AdminLayout";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -20,6 +21,16 @@ import CheckoutFailure from "./pages/CheckoutFailure";
 import CheckoutPending from "./pages/CheckoutPending";
 import NotFound from "./pages/NotFound";
 
+// Admin Pages
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminProducts from "./pages/admin/Products";
+import AdminCategories from "./pages/admin/Categories";
+import AdminOrders from "./pages/admin/Orders";
+import AdminReports from "./pages/admin/Reports";
+import AdminPromotions from "./pages/admin/Promotions";
+import AdminShipping from "./pages/admin/Shipping";
+import AdminSettings from "./pages/admin/Settings";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -29,30 +40,127 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/checkout/success" element={<CheckoutSuccess />} />
-                <Route path="/checkout/failure" element={<CheckoutFailure />} />
-                <Route path="/checkout/pending" element={<CheckoutPending />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/profile" element={
+          <Routes>
+            {/* Admin Routes */}
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="categories" element={<AdminCategories />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="reports" element={<AdminReports />} />
+              <Route path="promotions" element={<AdminPromotions />} />
+              <Route path="shipping" element={<AdminShipping />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
+            
+            {/* Public Routes */}
+            <Route path="/" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <Index />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/products" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <Products />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/product/:id" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <ProductDetail />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/cart" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <Cart />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/checkout" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <Checkout />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/checkout/success" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <CheckoutSuccess />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/checkout/failure" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <CheckoutFailure />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/checkout/pending" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <CheckoutPending />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/auth" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <Auth />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/profile" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
                   <ProtectedRoute>
                     <Profile />
                   </ProtectedRoute>
-                } />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+                </main>
+                <Footer />
+              </>
+            } />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={
+              <>
+                <Navbar />
+                <main className="flex-grow">
+                  <NotFound />
+                </main>
+                <Footer />
+              </>
+            } />
+          </Routes>
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>

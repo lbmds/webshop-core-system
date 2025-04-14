@@ -14,6 +14,8 @@ const InitialAdminSetup = ({ queryClient, specificEmail }: InitialAdminSetupProp
   useEffect(() => {
     const addSpecifiedAdmin = async () => {
       try {
+        console.log('Checking admin status for:', specificEmail);
+        
         // First, find the user by email
         const { data: userList, error: userError } = await supabase
           .from('users')
@@ -27,11 +29,11 @@ const InitialAdminSetup = ({ queryClient, specificEmail }: InitialAdminSetupProp
         
         if (!userList || userList.length === 0) {
           console.log('User not found, will be added when they sign up');
-          toast.info('O usuário será adicionado como admin quando se cadastrar.');
           return;
         }
         
         const userId = userList[0].id;
+        console.log('Found user ID:', userId);
         
         // Check if user already has admin role
         const { data: existingRole } = await supabase
@@ -42,9 +44,10 @@ const InitialAdminSetup = ({ queryClient, specificEmail }: InitialAdminSetupProp
         
         if (existingRole && existingRole.length > 0) {
           console.log('User is already an admin');
-          toast.info('Este usuário já é um administrador.');
           return;
         }
+        
+        console.log('Adding admin role to user:', userId);
         
         // Add admin role
         const { error } = await supabase
@@ -56,10 +59,10 @@ const InitialAdminSetup = ({ queryClient, specificEmail }: InitialAdminSetupProp
           
         if (error) {
           console.error('Error adding admin role:', error.message);
-          toast.error('Erro ao adicionar permissão de administrador');
           return;
         }
         
+        console.log('Admin role added successfully');
         toast.success('Permissão de administrador adicionada com sucesso');
         queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       } catch (error: any) {

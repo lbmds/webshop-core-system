@@ -7,7 +7,7 @@ import ProfileAdminAlert from "@/components/profile/ProfileAdminAlert";
 import ProfileForm, { UserProfile } from "@/components/profile/ProfileForm";
 
 const Profile = () => {
-  const { user, hasRole } = useAuth();
+  const { user, hasRole, refreshUserRoles } = useAuth();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
@@ -17,6 +17,9 @@ const Profile = () => {
         setLoading(true);
         
         if (!user) return;
+
+        // Refresh user roles to ensure we have the latest data
+        await refreshUserRoles();
 
         const { data, error } = await supabase
           .from('users')
@@ -36,9 +39,10 @@ const Profile = () => {
     }
 
     loadProfile();
-  }, [user]);
+  }, [user, refreshUserRoles]);
 
   const isAdmin = hasRole('admin');
+  console.log('User is admin:', isAdmin);
 
   if (loading) {
     return <div className="container py-8">Carregando...</div>;

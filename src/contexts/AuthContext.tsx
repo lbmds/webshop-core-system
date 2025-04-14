@@ -11,6 +11,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
   hasRole: (role: string) => boolean;
   userRoles: string[];
+  refreshUserRoles: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,6 +21,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userRoles, setUserRoles] = useState<string[]>([]);
+
+  // Function to fetch user roles from database
+  const fetchUserRoles = async (userId: string) => {
+    if (!userId) return;
+    
+    try {
+      console.log('Fetching roles for user:', userId);
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+      
+      if (error) {
+        console.error('Error fetching user roles:', error);
+        return;
+      }
+      
+      if (data && data.length > 0) {
+        const roles = data.map(item => item.role);
+        console.log('User roles:', roles);
+        setUserRoles(roles);
+      } else {
+        console.log('No specific roles found for user, using default customer role');
+        setUserRoles(['customer']); // Default role
+      }
+    } catch (error) {
+      console.error('Error in fetchUserRoles:', error);
+    }
+  };
+
+  const refreshUserRoles = async () => {
+    if (user) {
+      await fetchUserRoles(user.id);
+    }
+  };
 
   useEffect(() => {
     // Set up auth state listener
@@ -64,34 +100,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  // Function to fetch user roles from database
-  const fetchUserRoles = async (userId: string) => {
-    if (!userId) return;
-    
-    try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId);
-      
-      if (error) {
-        console.error('Error fetching user roles:', error);
-        return;
-      }
-      
-      if (data && data.length > 0) {
-        const roles = data.map(item => item.role);
-        console.log('User roles:', roles);
-        setUserRoles(roles);
-      } else {
-        console.log('No roles found for user');
-        setUserRoles(['customer']); // Default role
-      }
-    } catch (error) {
-      console.error('Error in fetchUserRoles:', error);
-    }
-  };
-
   const hasRole = (role: string): boolean => {
     return userRoles.includes(role);
   };
@@ -113,6 +121,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     signOut,
     hasRole,
     userRoles,
+    refreshUserRoles,
   };
 
   return (

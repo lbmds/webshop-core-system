@@ -3,8 +3,12 @@ import { Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProfileAdminAlert = () => {
+  const { hasRole } = useAuth();
+  console.log("Rendering ProfileAdminAlert, user is admin:", hasRole('admin'));
+  
   return (
     <Alert className="mb-6 bg-primary/10 border-primary">
       <Shield className="h-5 w-5" />

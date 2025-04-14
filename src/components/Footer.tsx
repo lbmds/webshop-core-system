@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="mb-4">
-              <Logo variant="dark" />
+              <Logo variant="dark" size="medium" />
             </div>
             <p className="text-sm text-secondary-foreground/80">
               Sua fonte confiável para livros, Bíblias e materiais de estudo. Comprometidos em fornecer recursos de qualidade para sua jornada espiritual.

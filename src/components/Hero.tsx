@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
@@ -11,7 +10,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-lg text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4 mb-6">
-            <Logo variant="white" showText={false} />
+            <Logo variant="white" size="large" showText={false} />
             <div className="text-white">
               <h2 className="text-3xl font-bold">NOVA</h2>
               <p className="text-sm font-medium text-secondary">Igreja Batista Grande Circular</p>

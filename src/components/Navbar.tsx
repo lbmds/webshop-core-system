@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Logo />
+            <Logo variant="default" size="medium" />
           </div>
           
           {/* Desktop Navigation */}

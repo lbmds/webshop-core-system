@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
-
 const Hero = () => {
-  return (
-    <section className="relative bg-cover bg-center h-[500px] flex items-center" 
-      style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop')" }}>
+  return <section className="relative bg-cover bg-center h-[500px] flex items-center" style={{
+    backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop')"
+  }}>
       <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-blue-900/50" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-lg text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4 mb-6">
             <Logo variant="white" size="large" showText={false} />
             <div className="text-white">
-              <h2 className="text-3xl font-bold">NOVA</h2>
+              <h2 className="text-3xl font-bold">NOVA IGREJA BATISTA</h2>
               <p className="text-sm font-medium text-secondary">Igreja Batista Grande Circular</p>
             </div>
           </div>
@@ -32,8 +31,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;

@@ -7,6 +7,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
+import { Shield } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface UserProfile {
   id: string;
@@ -21,7 +24,7 @@ interface UserProfile {
 }
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, hasRole } = useAuth();
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -90,6 +93,8 @@ const Profile = () => {
     setProfile(prev => prev ? { ...prev, [name]: value } : null);
   };
 
+  const isAdmin = hasRole('admin');
+
   if (loading) {
     return <div className="container py-8">Carregando...</div>;
   }
@@ -98,6 +103,22 @@ const Profile = () => {
     <div className="container py-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Meu Perfil</h1>
+        
+        {isAdmin && (
+          <Alert className="mb-6 bg-primary/10 border-primary">
+            <Shield className="h-5 w-5" />
+            <AlertTitle>Acesso Administrativo</AlertTitle>
+            <AlertDescription className="flex flex-col gap-2">
+              <p>Você tem acesso à área administrativa do sistema.</p>
+              <Button asChild variant="outline" className="w-fit">
+                <Link to="/admin" className="flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Acessar área administrativa
+                </Link>
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
         
         <Card>
           <CardHeader>

@@ -32,22 +32,22 @@ const Logo = ({
     textColorClass = "text-blue-900";
   }
 
-  // Calculate logo size based on size prop
+  // Updated logoSizeMap with larger dimensions
   const logoSizeMap = {
     small: {
-      width: "24",
-      height: "24",
-      circleSize: "w-8 h-8"
-    },
-    medium: {
-      width: "32",
-      height: "32",
-      circleSize: "w-10 h-10"
-    },
-    large: {
       width: "48",
       height: "48",
-      circleSize: "w-14 h-14"
+      circleSize: "w-12 h-12"
+    },
+    medium: {
+      width: "64",
+      height: "64", 
+      circleSize: "w-16 h-16"
+    },
+    large: {
+      width: "96",
+      height: "96",
+      circleSize: "w-24 h-24"
     }
   };
   const {

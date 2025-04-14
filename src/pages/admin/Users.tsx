@@ -105,8 +105,8 @@ const AdminUsers = () => {
         perPage: 100
       });
       
-      // Find the user by email manually in code
-      const user = userList?.users.find(user => user.email === email);
+      // Find the user by email manually in code with proper type assertion
+      const user = userList?.users.find((user: User) => user.email === email);
       
       if (!user) {
         throw new Error('Usuário não encontrado');

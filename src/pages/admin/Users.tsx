@@ -61,7 +61,7 @@ const AdminUsers = () => {
       const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) {
-        throw new authError;
+        throw authError; // Just throw the error directly, don't try to construct it
       }
       
       // Fetch role information for each user
@@ -97,18 +97,20 @@ const AdminUsers = () => {
     mutationFn: async (data: z.infer<typeof addAdminFormSchema>) => {
       const { email } = data;
       
-      // First search if user exists
-      const { data: users } = await supabase.auth.admin.listUsers({
-        filters: {
-          email: email
-        }
+      // First search if user exists - fix the invalid filters property
+      const { data: userList } = await supabase.auth.admin.listUsers({
+        // Remove the filters object and use a different approach
+        // that's compatible with the API
+        page: 1,
+        perPage: 100
       });
       
-      if (!users || users.users.length === 0) {
+      // Find the user by email manually in code
+      const user = userList?.users.find(user => user.email === email);
+      
+      if (!user) {
         throw new Error('Usuário não encontrado');
       }
-      
-      const user = users.users[0];
       
       // Check if user already has admin role
       const { data: existingRole, error: roleCheckError } = await supabase

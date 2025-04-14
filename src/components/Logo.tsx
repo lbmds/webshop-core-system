@@ -1,16 +1,19 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+
 interface LogoProps {
   variant?: "default" | "white" | "dark";
   showText?: boolean;
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "xlarge";
   className?: string;
   href?: string;
   logoOnly?: boolean;
   onClick?: () => void;
   customLogoSrc?: string;
 }
+
 const Logo = ({
   variant = "default",
   showText = true,
@@ -29,22 +32,27 @@ const Logo = ({
     textColorClass = "text-blue-900";
   }
 
-  // Updated logoSizeMap with larger dimensions
+  // Updated logoSizeMap with doubled dimensions
   const logoSizeMap = {
     small: {
-      width: "48",
-      height: "48",
-      circleSize: "w-12 h-12"
+      width: "96", // Doubled from 48
+      height: "96", // Doubled from 48
+      circleSize: "w-24 h-24" // Adjusted to match new size
     },
     medium: {
-      width: "64",
-      height: "64",
-      circleSize: "w-16 h-16"
+      width: "128", // Doubled from 64
+      height: "128", // Doubled from 64
+      circleSize: "w-32 h-32" // Adjusted to match new size
     },
     large: {
-      width: "96",
-      height: "96",
-      circleSize: "w-24 h-24"
+      width: "192", // Doubled from 96
+      height: "192", // Doubled from 96
+      circleSize: "w-48 h-48" // Adjusted to match new size
+    },
+    xlarge: {
+      width: "256", // New extra large size
+      height: "256", // New extra large size
+      circleSize: "w-64 h-64" // Adjusted to match new size
     }
   };
   const {
@@ -57,7 +65,8 @@ const Logo = ({
   const textSizeMap = {
     small: "text-base",
     medium: "text-xl",
-    large: "text-2xl"
+    large: "text-2xl",
+    xlarge: "text-3xl"
   };
   const logoContent = <>
       <div className={circleSize}>
@@ -77,4 +86,5 @@ const Logo = ({
       {logoContent}
     </Link>;
 };
+
 export default Logo;

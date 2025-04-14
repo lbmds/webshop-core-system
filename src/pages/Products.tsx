@@ -26,101 +26,131 @@ const Products = () => {
   const products = [
     {
       id: 1,
-      name: "Premium Wireless Headphones",
-      price: 199.99,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1470&auto=format&fit=crop",
-      category: "Electronics",
-      rating: 4.5,
+      name: "Caneca Personalizada - Logo Oficial",
+      price: 29.99,
+      image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=1470&auto=format&fit=crop",
+      category: "Canecas",
+      rating: 4.8,
       isNew: true
     },
     {
       id: 2,
-      name: "Ultra HD Smart TV 55\"",
-      price: 699.99,
-      originalPrice: 899.99,
-      image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=1475&auto=format&fit=crop",
-      category: "Electronics",
-      rating: 4.8,
-      isOnSale: true
-    },
-    {
-      id: 3,
-      name: "Professional DSLR Camera",
-      price: 1299.99,
-      image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?q=80&w=1470&auto=format&fit=crop",
-      category: "Electronics",
+      name: "Caneca Térmica 500ml",
+      price: 39.99,
+      image: "https://images.unsplash.com/photo-1577937927133-66ef06acdf18?q=80&w=1374&auto=format&fit=crop",
+      category: "Canecas",
       rating: 4.7
     },
     {
+      id: 3,
+      name: "Caneca de Cerâmica Artesanal",
+      price: 34.99,
+      image: "https://images.unsplash.com/photo-1572916118992-fb8c982d3d6c?q=80&w=1374&auto=format&fit=crop",
+      category: "Canecas",
+      rating: 4.6
+    },
+    {
       id: 4,
-      name: "Smartwatch Series 5",
-      price: 349.99,
-      originalPrice: 399.99,
-      image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=1472&auto=format&fit=crop",
-      category: "Electronics",
-      rating: 4.6,
+      name: "Camisa Polo - Coleção 2025",
+      price: 89.99,
+      originalPrice: 119.99,
+      image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=1374&auto=format&fit=crop",
+      category: "Camisas",
+      rating: 4.7,
       isOnSale: true
     },
     {
       id: 5,
-      name: "Casual Denim Jacket",
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1036&auto=format&fit=crop",
-      category: "Clothing",
-      rating: 4.3,
-      isNew: true
-    },
-    {
-      id: 6,
-      name: "Natural Bamboo Side Table",
-      price: 129.99,
-      image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?q=80&w=1374&auto=format&fit=crop",
-      category: "Home & Kitchen",
-      rating: 4.2,
-      isNew: true
-    },
-    {
-      id: 7,
-      name: "Organic Face Serum",
-      price: 49.99,
-      image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=987&auto=format&fit=crop",
-      category: "Beauty",
+      name: "Camisa Estampada - Edição Especial",
+      price: 59.99,
+      image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1528&auto=format&fit=crop",
+      category: "Camisas",
       rating: 4.5,
       isNew: true
     },
     {
-      id: 8,
-      name: "Fitness Smart Band",
-      price: 59.99,
-      image: "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?q=80&w=1035&auto=format&fit=crop",
-      category: "Sports",
-      rating: 4.1,
+      id: 6,
+      name: "Caneta Executiva Metálica",
+      price: 24.99,
+      image: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=1470&auto=format&fit=crop",
+      category: "Canetas",
+      rating: 4.9
+    },
+    {
+      id: 7,
+      name: "Kit Canetas Coloridas",
+      price: 29.99,
+      image: "https://images.unsplash.com/photo-1595925889916-1daa01718120?q=80&w=1374&auto=format&fit=crop",
+      category: "Canetas",
+      rating: 4.2,
       isNew: true
+    },
+    {
+      id: 8,
+      name: "Blusa de Moletom - Inverno",
+      price: 79.99,
+      originalPrice: 99.99,
+      image: "https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1470&auto=format&fit=crop",
+      category: "Blusas",
+      rating: 4.6,
+      isOnSale: true
+    },
+    {
+      id: 9,
+      name: "Blusa Polo Feminina",
+      price: 69.99,
+      image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=1525&auto=format&fit=crop",
+      category: "Blusas",
+      rating: 4.8
+    },
+    {
+      id: 10,
+      name: "Chaveiro Emborrachado 3D",
+      price: 14.99,
+      image: "https://images.unsplash.com/photo-1590333748338-d629e4564ad1?q=80&w=1374&auto=format&fit=crop",
+      category: "Chaveiros",
+      rating: 4.3,
+      isNew: true
+    },
+    {
+      id: 11,
+      name: "Chaveiro Abridor de Garrafas",
+      price: 19.99,
+      image: "https://images.unsplash.com/photo-1561464382-349a0d78a9b7?q=80&w=1374&auto=format&fit=crop",
+      category: "Chaveiros",
+      rating: 4.1
+    },
+    {
+      id: 12,
+      name: "Chaveiro de Metal Personalizado",
+      price: 12.99,
+      image: "https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?q=80&w=1470&auto=format&fit=crop",
+      category: "Chaveiros",
+      rating: 4.4
     }
   ];
   
   // Mock data for filters
   const categoryFilters = {
     id: "categories",
-    name: "Categories",
+    name: "Categorias",
     options: [
-      { id: "electronics", label: "Electronics" },
-      { id: "clothing", label: "Clothing" },
-      { id: "home-kitchen", label: "Home & Kitchen" },
-      { id: "beauty", label: "Beauty" },
-      { id: "sports", label: "Sports" }
+      { id: "canecas", label: "Canecas" },
+      { id: "camisas", label: "Camisas" },
+      { id: "canetas", label: "Canetas" },
+      { id: "blusas", label: "Blusas" },
+      { id: "chaveiros", label: "Chaveiros" }
     ]
   };
   
   const brandFilters = {
     id: "brands",
-    name: "Brands",
+    name: "Marcas",
     options: [
-      { id: "apple", label: "Apple" },
-      { id: "samsung", label: "Samsung" },
-      { id: "nike", label: "Nike" },
-      { id: "adidas", label: "Adidas" },
-      { id: "sony", label: "Sony" }
+      { id: "marca-propria", label: "Marca Própria" },
+      { id: "premium", label: "Premium" },
+      { id: "classic", label: "Classic" },
+      { id: "eco", label: "Eco-friendly" }
     ]
   };
   
@@ -131,36 +161,38 @@ const Products = () => {
   
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">All Products</h1>
+      <h1 className="text-3xl font-bold mb-6 section-title">Todos os Produtos</h1>
       
       {/* Filter and sort controls */}
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Filters sidebar */}
         <div className="lg:w-1/4">
-          <ProductsFilter
-            categories={categoryFilters}
-            brands={brandFilters}
-            priceRange={[0, 1000]}
-            onFilterChange={handleFilterChange}
-          />
+          <div className="bordered-section">
+            <ProductsFilter
+              categories={categoryFilters}
+              brands={brandFilters}
+              priceRange={[0, 200]}
+              onFilterChange={handleFilterChange}
+            />
+          </div>
         </div>
         
         {/* Products grid */}
         <div className="lg:w-3/4">
           {/* Sort and layout controls */}
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 bordered-section p-4">
             <div className="flex items-center">
-              <span className="text-sm mr-2">Sort by:</span>
+              <span className="text-sm mr-2">Ordenar por:</span>
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Featured" />
+                  <SelectValue placeholder="Em destaque" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="featured">Featured</SelectItem>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                  <SelectItem value="price-desc">Price: High to Low</SelectItem>
-                  <SelectItem value="rating">Highest Rated</SelectItem>
+                  <SelectItem value="featured">Em destaque</SelectItem>
+                  <SelectItem value="newest">Novidades</SelectItem>
+                  <SelectItem value="price-asc">Preço: Menor para Maior</SelectItem>
+                  <SelectItem value="price-desc">Preço: Maior para Menor</SelectItem>
+                  <SelectItem value="rating">Melhor Avaliados</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -188,7 +220,7 @@ const Products = () => {
           {/* Products */}
           <div className={layout === 'grid' ? 'product-grid' : 'space-y-4'}>
             {products.map((product) => (
-              <div key={product.id} className={layout === 'list' ? 'border rounded-md p-4' : ''}>
+              <div key={product.id} className={layout === 'list' ? 'bordered-section p-4' : 'product-card'}>
                 <ProductCard {...product} />
               </div>
             ))}

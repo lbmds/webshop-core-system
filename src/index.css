@@ -50,6 +50,11 @@
   }
 }
 
+/* Adicionando bordas e sombras para cards e elementos principais */
+.card {
+  @apply border border-border rounded-lg shadow-md transition-all duration-200;
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -76,4 +81,35 @@
   border-radius: 50%;
   position: absolute;
   z-index: -1;
+}
+
+/* Melhorias de design */
+.section-title {
+  @apply text-2xl md:text-3xl font-bold mb-6 text-center relative;
+}
+
+.section-title::after {
+  content: "";
+  @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 w-20 bg-primary rounded-full;
+}
+
+.bordered-section {
+  @apply border border-border rounded-xl shadow-sm p-6 bg-white;
+}
+
+.product-card {
+  @apply transform transition-all duration-200 hover:scale-105 hover:shadow-lg;
+}
+
+.product-carousel {
+  @apply py-8;
+}
+
+.carousel-navigation {
+  @apply flex items-center justify-center mt-4 gap-2;
+}
+
+/* Botões de navegação para o carrossel */
+.carousel-button {
+  @apply p-2 rounded-full bg-secondary/20 hover:bg-secondary/40 transition-colors;
 }

@@ -2,48 +2,49 @@
 import Hero from "@/components/Hero";
 import FeaturedCategories from "@/components/FeaturedCategories";
 import FeaturedProducts from "@/components/FeaturedProducts";
+import ProductCarousel from "@/components/ProductCarousel";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Book, Gift, BookOpen, Bookmark, Video, Music } from "lucide-react";
+import { Book, Gift, BookOpen, Bookmark, ShoppingBag, Coffee } from "lucide-react";
 
 const Index = () => {
   // Mock data for categories
   const categories = [
     {
       id: 1,
-      name: "Bíblias",
-      image: "https://images.unsplash.com/photo-1585860180271-c396f69d6fdf?q=80&w=1470&auto=format&fit=crop",
-      productCount: 48
+      name: "Canecas",
+      image: "https://images.unsplash.com/photo-1572990302336-a8a5a1a1c2fa?q=80&w=1374&auto=format&fit=crop",
+      productCount: 24
     },
     {
       id: 2,
-      name: "Livros",
-      image: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1470&auto=format&fit=crop",
-      productCount: 124
+      name: "Camisas",
+      image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?q=80&w=1471&auto=format&fit=crop",
+      productCount: 36
     },
     {
       id: 3,
-      name: "Estudos",
-      image: "https://images.unsplash.com/photo-1546074177-31bfa593f731?q=80&w=1374&auto=format&fit=crop",
-      productCount: 86
+      name: "Canetas",
+      image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=1470&auto=format&fit=crop",
+      productCount: 18
     },
     {
       id: 4,
-      name: "Música",
-      image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1470&auto=format&fit=crop",
-      productCount: 57
-    },
-    {
-      id: 5,
-      name: "Presentes",
-      image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=1470&auto=format&fit=crop",
+      name: "Blusas",
+      image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=1372&auto=format&fit=crop",
       productCount: 42
     },
     {
+      id: 5,
+      name: "Chaveiros",
+      image: "https://images.unsplash.com/photo-1631972235075-848c1e0ed653?q=80&w=1470&auto=format&fit=crop",
+      productCount: 15
+    },
+    {
       id: 6,
-      name: "Mídia Digital",
-      image: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=1470&auto=format&fit=crop",
-      productCount: 33
+      name: "Sacolas",
+      image: "https://images.unsplash.com/photo-1597484662317-c93a56c9e67d?q=80&w=1374&auto=format&fit=crop",
+      productCount: 12
     }
   ];
   
@@ -51,38 +52,38 @@ const Index = () => {
   const featuredProducts = [
     {
       id: 1,
-      name: "Bíblia de Estudo Aplicação Pessoal",
-      price: 159.99,
-      image: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1470&auto=format&fit=crop",
-      category: "Bíblias",
+      name: "Caneca Personalizada - Logo Oficial",
+      price: 29.99,
+      image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=1470&auto=format&fit=crop",
+      category: "Canecas",
       rating: 4.8,
       isNew: true
     },
     {
       id: 2,
-      name: "Dicionário Bíblico Ilustrado",
+      name: "Camisa Polo - Coleção 2025",
       price: 89.99,
       originalPrice: 119.99,
-      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1374&auto=format&fit=crop",
-      category: "Livros",
+      image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=1374&auto=format&fit=crop",
+      category: "Camisas",
       rating: 4.7,
       isOnSale: true
     },
     {
       id: 3,
-      name: "Curso de Teologia Básica",
-      price: 249.99,
-      image: "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=1470&auto=format&fit=crop",
-      category: "Estudos",
+      name: "Caneta Executiva Metálica",
+      price: 24.99,
+      image: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=1470&auto=format&fit=crop",
+      category: "Canetas",
       rating: 4.9
     },
     {
       id: 4,
-      name: "Bíblia Sagrada Letra Grande",
+      name: "Blusa de Moletom - Inverno",
       price: 79.99,
       originalPrice: 99.99,
-      image: "https://images.unsplash.com/photo-1581074817932-3fecc307e8b3?q=80&w=1470&auto=format&fit=crop",
-      category: "Bíblias",
+      image: "https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1470&auto=format&fit=crop",
+      category: "Blusas",
       rating: 4.6,
       isOnSale: true
     }
@@ -92,48 +93,70 @@ const Index = () => {
   const newArrivals = [
     {
       id: 5,
-      name: "Hinário Edição Especial",
-      price: 49.99,
-      image: "https://images.unsplash.com/photo-1465225314224-587cd83d322b?q=80&w=1470&auto=format&fit=crop",
-      category: "Música",
+      name: "Chaveiro Emborrachado 3D",
+      price: 14.99,
+      image: "https://images.unsplash.com/photo-1590333748338-d629e4564ad1?q=80&w=1374&auto=format&fit=crop",
+      category: "Chaveiros",
       rating: 4.3,
       isNew: true
     },
     {
       id: 6,
-      name: "Kit Marcadores Bíblicos",
+      name: "Kit Canetas Coloridas",
       price: 29.99,
-      image: "https://images.unsplash.com/photo-1605020420620-20c943cc4669?q=80&w=1470&auto=format&fit=crop",
-      category: "Presentes",
+      image: "https://images.unsplash.com/photo-1595925889916-1daa01718120?q=80&w=1374&auto=format&fit=crop",
+      category: "Canetas",
       rating: 4.2,
       isNew: true
     },
     {
       id: 7,
-      name: "Devocional Diário Anual",
+      name: "Camisa Estampada - Edição Especial",
       price: 59.99,
-      image: "https://images.unsplash.com/photo-1506784926709-22f1ec395907?q=80&w=1468&auto=format&fit=crop",
-      category: "Livros",
+      image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1528&auto=format&fit=crop",
+      category: "Camisas",
       rating: 4.5,
       isNew: true
     },
     {
       id: 8,
-      name: "Série de Estudos em Vídeo",
-      price: 119.99,
-      image: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?q=80&w=1374&auto=format&fit=crop",
-      category: "Mídia Digital",
+      name: "Caneca Térmica 500ml",
+      price: 39.99,
+      image: "https://images.unsplash.com/photo-1577937927133-66ef06acdf18?q=80&w=1374&auto=format&fit=crop",
+      category: "Canecas",
       rating: 4.7,
       isNew: true
+    }
+  ];
+  
+  // Carrossel de produtos em destaque
+  const carouselProducts = [
+    ...featuredProducts,
+    ...newArrivals,
+    {
+      id: 9,
+      name: "Blusa Polo Feminina",
+      price: 69.99,
+      image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=1525&auto=format&fit=crop",
+      category: "Blusas",
+      rating: 4.8
+    },
+    {
+      id: 10,
+      name: "Chaveiro Abridor de Garrafas",
+      price: 19.99,
+      image: "https://images.unsplash.com/photo-1561464382-349a0d78a9b7?q=80&w=1374&auto=format&fit=crop",
+      category: "Chaveiros",
+      rating: 4.1
     }
   ];
   
   // Benefits section data
   const benefits = [
     {
-      icon: <BookOpen className="h-8 w-8" />,
-      title: "Material de Qualidade",
-      description: "Selecionados por especialistas"
+      icon: <ShoppingBag className="h-8 w-8" />,
+      title: "Produtos Personalizados",
+      description: "De acordo com sua identidade visual"
     },
     {
       icon: <Gift className="h-8 w-8" />,
@@ -141,13 +164,13 @@ const Index = () => {
       description: "Para presentes"
     },
     {
-      icon: <Bookmark className="h-8 w-8" />,
-      title: "Recursos Exclusivos",
-      description: "Para membros da igreja"
+      icon: <Coffee className="h-8 w-8" />,
+      title: "Alta Qualidade",
+      description: "Materiais duráveis"
     },
     {
-      icon: <Book className="h-8 w-8" />,
-      title: "Variedade de Edições",
+      icon: <BookOpen className="h-8 w-8" />,
+      title: "Variedade de Opções",
       description: "Para diferentes necessidades"
     }
   ];
@@ -157,7 +180,7 @@ const Index = () => {
       <Hero />
       
       {/* Benefits */}
-      <section className="bg-white py-8">
+      <section className="bg-white py-8 bordered-section mx-4 my-8 -mt-10 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {benefits.map((benefit, index) => (
@@ -171,10 +194,17 @@ const Index = () => {
         </div>
       </section>
       
+      {/* Carrossel de produtos */}
+      <ProductCarousel
+        title="Produtos em Destaque"
+        products={carouselProducts}
+        viewAllLink="/products"
+      />
+      
       <FeaturedCategories categories={categories} />
       
       <FeaturedProducts
-        title="Produtos Destacados"
+        title="Mais Vendidos"
         products={featuredProducts}
         viewAllLink="/products"
       />
@@ -186,7 +216,7 @@ const Index = () => {
       />
       
       {/* Newsletter */}
-      <section className="bg-primary py-16">
+      <section className="bg-primary py-16 rounded-lg mx-4 my-8">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             Junte-se à Nossa Newsletter

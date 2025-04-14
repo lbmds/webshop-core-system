@@ -3,7 +3,7 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingBag, BarChart2, BadgePercent, Truck, Settings } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, BarChart2, BadgePercent, Truck, Settings, Users } from 'lucide-react';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -71,6 +71,12 @@ const AdminControls = () => {
             <Link to="/admin/shipping" className="flex items-center cursor-pointer w-full">
               <Truck className="h-4 w-4 mr-2" />
               Frete
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/admin/users" className="flex items-center cursor-pointer w-full">
+              <Users className="h-4 w-4 mr-2" />
+              Usuários
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

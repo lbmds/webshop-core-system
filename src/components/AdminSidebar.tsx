@@ -14,7 +14,8 @@ import {
   X,
   Home,
   LogOut,
-  Wifi
+  Wifi,
+  Users
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -71,6 +72,7 @@ const AdminSidebar = () => {
     { icon: BarChart2, label: 'Relatórios', href: '/admin/reports' },
     { icon: BadgePercent, label: 'Promoções', href: '/admin/promotions' },
     { icon: Truck, label: 'Configuração de Frete', href: '/admin/shipping' },
+    { icon: Users, label: 'Usuários', href: '/admin/users' },
     { icon: Settings, label: 'Configurações', href: '/admin/settings' },
   ];
 

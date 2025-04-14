@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface AuthContextType {
   user: User | null;
@@ -9,6 +10,7 @@ interface AuthContextType {
   isLoading: boolean;
   signOut: () => Promise<void>;
   hasRole: (role: string) => boolean;
+  userRoles: string[];
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,14 +25,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
+        console.log('Auth event:', event);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
         // Fetch user roles when session changes
         if (currentSession?.user) {
           fetchUserRoles(currentSession.user.email);
+          if (event === 'SIGNED_IN') {
+            toast.success(`Bem-vindo, ${currentSession.user.email}!`);
+          }
         } else {
           setUserRoles([]);
+          if (event === 'SIGNED_OUT') {
+            toast.info('Você saiu do sistema');
+          }
         }
         
         setIsLoading(false);
@@ -59,11 +68,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchUserRoles = async (email: string | undefined) => {
     if (!email) return;
     
-    // For demonstration purposes, we'll just set the admin role for the specified email
-    if (email === 'legol24854@insfou.com') {
-      setUserRoles(['admin']);
-    } else {
-      setUserRoles(['customer']);
+    try {
+      // For demonstration purposes, we'll just set the admin role for the specified email
+      if (email === 'legol24854@insfou.com') {
+        setUserRoles(['admin']);
+        console.log('Admin user detected:', email);
+      } else {
+        setUserRoles(['customer']);
+        console.log('Regular customer detected:', email);
+      }
+    } catch (error) {
+      console.error('Error fetching user roles:', error);
     }
     
     // In a real application, you would fetch roles from your database
@@ -82,8 +97,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setUserRoles([]);
+    try {
+      await supabase.auth.signOut();
+      setUserRoles([]);
+    } catch (error) {
+      console.error('Error signing out:', error);
+      toast.error('Erro ao sair do sistema');
+    }
   };
 
   const value = {
@@ -92,6 +112,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isLoading,
     signOut,
     hasRole,
+    userRoles,
   };
 
   return (

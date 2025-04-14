@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { 
   LayoutDashboard, 
@@ -11,10 +11,15 @@ import {
   Truck, 
   Settings,
   Menu,
-  X
+  X,
+  Home,
+  LogOut,
+  Wifi
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -40,8 +45,23 @@ const SidebarItem = ({ icon: Icon, label, href, isActive }: SidebarItemProps) =>
 
 const AdminSidebar = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [collapsed, setCollapsed] = React.useState(false);
+  const [isOnline, setIsOnline] = React.useState(true);
+
+  React.useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
@@ -54,6 +74,11 @@ const AdminSidebar = () => {
     { icon: Settings, label: 'Configurações', href: '/admin/settings' },
   ];
 
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/');
+  };
+
   if (!user) return null;
 
   return (
@@ -62,7 +87,27 @@ const AdminSidebar = () => {
       collapsed ? "w-[70px]" : "w-64"
     )}>
       <div className="p-4 border-b border-border flex justify-between items-center">
-        {!collapsed && <h2 className="text-xl font-bold">Admin</h2>}
+        {!collapsed && (
+          <div className="flex items-center">
+            <h2 className="text-xl font-bold">Admin</h2>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge 
+                    variant={isOnline ? "default" : "destructive"}
+                    className="ml-2 h-6 cursor-default"
+                  >
+                    <Wifi className="h-3 w-3 mr-1" />
+                    {isOnline ? 'Online' : 'Offline'}
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {isOnline ? 'Alterações em tempo real ativas' : 'Sem conexão - alterações não serão salvas'}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
         <Button 
           variant="ghost" 
           size="icon"
@@ -77,9 +122,18 @@ const AdminSidebar = () => {
         {menuItems.map((item) => (
           <React.Fragment key={item.href}>
             {collapsed ? (
-              <Link to={item.href} className="flex justify-center p-2 mb-2 rounded-md hover:bg-accent">
-                <item.icon className="h-6 w-6" />
-              </Link>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link to={item.href} className="flex justify-center p-2 mb-2 rounded-md hover:bg-accent">
+                      <item.icon className="h-6 w-6" />
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    {item.label}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ) : (
               <SidebarItem
                 icon={item.icon}
@@ -92,13 +146,54 @@ const AdminSidebar = () => {
         ))}
       </div>
       
-      <div className="p-4 border-t border-border">
-        {!collapsed && (
-          <Link to="/">
-            <Button variant="outline" className="w-full">
-              Voltar ao site
+      <div className="p-4 border-t border-border flex flex-col gap-2">
+        {collapsed ? (
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link to="/" className="flex justify-center p-2 rounded-md hover:bg-accent">
+                    <Home className="h-5 w-5" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  Ver o site
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={handleLogout}
+                    className="w-full p-2"
+                  >
+                    <LogOut className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  Sair
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </>
+        ) : (
+          <>
+            <Link to="/">
+              <Button variant="outline" className="w-full">
+                <Home className="h-4 w-4 mr-2" />
+                Ver o site
+              </Button>
+            </Link>
+            
+            <Button variant="destructive" onClick={handleLogout} className="w-full">
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
             </Button>
-          </Link>
+          </>
         )}
       </div>
     </div>

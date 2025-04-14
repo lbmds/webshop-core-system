@@ -28,6 +28,12 @@ const AdminLayout = () => {
     return <Navigate to="/" replace />;
   }
   
+  React.useEffect(() => {
+    toast.success("Bem-vindo à área administrativa", {
+      description: "Todas as alterações feitas aqui são refletidas em tempo real no site"
+    });
+  }, []);
+  
   return (
     <div className="flex h-screen bg-background">
       <AdminSidebar />

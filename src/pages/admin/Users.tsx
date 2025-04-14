@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query'; 
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,16 +22,22 @@ const AdminUsers = () => {
     isRemovingAdmin
   } = useUserManagement();
   
-  // Set up initial admin user (specified by email)
-  const specificEmail = "legol24854@insfou.com";
+  // Updated to include both initial admin emails
+  const initialAdminEmails = [
+    "legol24854@insfou.com", 
+    "bosaw56955@ptiong.com"
+  ];
   
   return (
     <div className="p-4">
-      {/* Hidden component that sets up the initial admin */}
-      <InitialAdminSetup 
-        queryClient={queryClient}
-        specificEmail={specificEmail}
-      />
+      {/* Hidden components that set up initial admins */}
+      {initialAdminEmails.map(email => (
+        <InitialAdminSetup 
+          key={email}
+          queryClient={queryClient}
+          specificEmail={email}
+        />
+      ))}
       
       <div className="flex justify-between items-center mb-6">
         <div>

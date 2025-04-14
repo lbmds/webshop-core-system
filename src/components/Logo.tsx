@@ -22,7 +22,7 @@ const Logo = ({
   href = "/",
   logoOnly = false,
   onClick,
-  customLogoSrc = "/lovable-uploads/02f7d6e9-c5dd-4d66-b4f0-06befa4a8e59.png"
+  customLogoSrc = "/lovable-uploads/0e9dc446-8851-4a6d-a827-08509a5dde5b.png"
 }: LogoProps) => {
   // Calculate text color based on variant
   let textColorClass = "text-primary";
@@ -72,7 +72,7 @@ const Logo = ({
       </div>
       {showText && !logoOnly && (
         <div className={cn(`font-bold ${textColorClass}`)}>
-          <span className={textSizeMap[size]}>NIB Grande Circular</span>
+          <span className={textSizeMap[size]}>Igreja Batista Grande Circular</span>
         </div>
       )}
     </>

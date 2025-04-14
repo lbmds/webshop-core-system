@@ -1,9 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { User } from '@supabase/supabase-js';
 import { 
   Table, 
   TableBody, 
@@ -34,8 +33,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { User as UserIcon, UserPlus, Shield, Trash2 } from 'lucide-react';
+import { Shield, Trash2 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from '@/contexts/AuthContext';
 
 // Define the user structure that we'll use
 type UserWithRoles = {
@@ -52,21 +52,28 @@ const addAdminFormSchema = z.object({
 const AdminUsers = () => {
   const [isAddAdminOpen, setIsAddAdminOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { session } = useAuth();
   
   // Fetch all users with roles
   const { data: users, isLoading, error } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      // Fetch users from Supabase Auth
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+      // Fetch users from database directly instead of using admin API
+      const { data: dbUsers, error: usersError } = await supabase
+        .from('users')
+        .select('id, email');
+
+      if (usersError) {
+        throw usersError;
+      }
       
-      if (authError) {
-        throw authError; // Just throw the error directly, don't try to construct it
+      if (!dbUsers || dbUsers.length === 0) {
+        return [];
       }
       
       // Fetch role information for each user
       const usersWithRoles: UserWithRoles[] = await Promise.all(
-        authUsers.users.map(async (user) => {
+        dbUsers.map(async (user) => {
           const { data: roles } = await supabase
             .from('user_roles')
             .select('role')
@@ -75,13 +82,14 @@ const AdminUsers = () => {
           return {
             id: user.id,
             email: user.email || 'sem email',
-            roles: roles?.map(r => r.role) || [],
+            roles: roles?.map(r => r.role) || ['customer'],
           };
         })
       );
       
       return usersWithRoles;
-    }
+    },
+    enabled: !!session // Only run query when authenticated
   });
   
   // Form for adding admin user
@@ -97,18 +105,14 @@ const AdminUsers = () => {
     mutationFn: async (data: z.infer<typeof addAdminFormSchema>) => {
       const { email } = data;
       
-      // First search if user exists - fix the invalid filters property
-      const { data: userList } = await supabase.auth.admin.listUsers({
-        // Remove the filters object and use a different approach
-        // that's compatible with the API
-        page: 1,
-        perPage: 100
-      });
+      // First, find the user by email
+      const { data: userList, error: userError } = await supabase
+        .from('users')
+        .select('id, email')
+        .eq('email', email)
+        .single();
       
-      // Find the user by email manually in code with proper type assertion
-      const user = userList?.users.find((user: User) => user.email === email);
-      
-      if (!user) {
+      if (userError || !userList) {
         throw new Error('Usuário não encontrado');
       }
       
@@ -116,11 +120,10 @@ const AdminUsers = () => {
       const { data: existingRole, error: roleCheckError } = await supabase
         .from('user_roles')
         .select('*')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .single();
+        .eq('user_id', userList.id)
+        .eq('role', 'admin');
       
-      if (existingRole) {
+      if (existingRole && existingRole.length > 0) {
         throw new Error('Usuário já possui permissão de administrador');
       }
       
@@ -128,13 +131,13 @@ const AdminUsers = () => {
       const { error } = await supabase
         .from('user_roles')
         .insert({
-          user_id: user.id,
+          user_id: userList.id,
           role: 'admin'
         });
         
       if (error) throw error;
       
-      return { user, success: true };
+      return { success: true };
     },
     onSuccess: () => {
       toast.success('Permissão de administrador adicionada com sucesso');

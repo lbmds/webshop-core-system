@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         // Fetch user roles when session changes
         if (currentSession?.user) {
-          fetchUserRoles(currentSession.user.email);
+          fetchUserRoles(currentSession.user.id);
           if (event === 'SIGNED_IN') {
             toast.success(`Bem-vindo, ${currentSession.user.email}!`);
           }
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       // Fetch user roles for existing session
       if (currentSession?.user) {
-        fetchUserRoles(currentSession.user.email);
+        fetchUserRoles(currentSession.user.id);
       }
       
       setIsLoading(false);
@@ -64,32 +64,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  // Function to fetch user roles
-  const fetchUserRoles = async (email: string | undefined) => {
-    if (!email) return;
+  // Function to fetch user roles from database
+  const fetchUserRoles = async (userId: string) => {
+    if (!userId) return;
     
     try {
-      // For demonstration purposes, we'll just set the admin role for the specified email
-      if (email === 'legol24854@insfou.com') {
-        setUserRoles(['admin']);
-        console.log('Admin user detected:', email);
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+      
+      if (error) {
+        console.error('Error fetching user roles:', error);
+        return;
+      }
+      
+      if (data && data.length > 0) {
+        const roles = data.map(item => item.role);
+        console.log('User roles:', roles);
+        setUserRoles(roles);
       } else {
-        setUserRoles(['customer']);
-        console.log('Regular customer detected:', email);
+        console.log('No roles found for user');
+        setUserRoles(['customer']); // Default role
       }
     } catch (error) {
-      console.error('Error fetching user roles:', error);
+      console.error('Error in fetchUserRoles:', error);
     }
-    
-    // In a real application, you would fetch roles from your database
-    // const { data, error } = await supabase
-    //   .from('user_roles')
-    //   .select('role')
-    //   .eq('user_id', userId);
-    
-    // if (data && !error) {
-    //   setUserRoles(data.map(item => item.role));
-    // }
   };
 
   const hasRole = (role: string): boolean => {

@@ -1,8 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-
 interface LogoProps {
   variant?: "default" | "white" | "dark";
   showText?: boolean;
@@ -13,7 +11,6 @@ interface LogoProps {
   onClick?: () => void;
   customLogoSrc?: string;
 }
-
 const Logo = ({
   variant = "default",
   showText = true,
@@ -41,7 +38,7 @@ const Logo = ({
     },
     medium: {
       width: "64",
-      height: "64", 
+      height: "64",
       circleSize: "w-16 h-16"
     },
     large: {
@@ -62,33 +59,22 @@ const Logo = ({
     medium: "text-xl",
     large: "text-2xl"
   };
-
-  const logoContent = (
-    <>
+  const logoContent = <>
       <div className={circleSize}>
         <svg width={width} height={height} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10">
           <image href={customLogoSrc} width="100" height="100" />
         </svg>
       </div>
-      {showText && !logoOnly && (
-        <div className={cn(`font-bold ${textColorClass}`)}>
-          <span className={textSizeMap[size]}>Igreja Batista Grande Circular</span>
-        </div>
-      )}
-    </>
-  );
-
+      {showText && !logoOnly}
+    </>;
   const containerClass = cn("flex items-center gap-2", className);
 
   // Render as clickable link or static div based on props
   if (logoOnly) {
     return <div className={containerClass} onClick={onClick}>{logoContent}</div>;
   }
-  return (
-    <Link to={href} className={containerClass} onClick={onClick}>
+  return <Link to={href} className={containerClass} onClick={onClick}>
       {logoContent}
-    </Link>
-  );
+    </Link>;
 };
-
 export default Logo;

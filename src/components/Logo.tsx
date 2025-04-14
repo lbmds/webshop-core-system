@@ -1,6 +1,8 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+
 interface LogoProps {
   variant?: "default" | "white" | "dark";
   showText?: boolean;
@@ -9,7 +11,9 @@ interface LogoProps {
   href?: string;
   logoOnly?: boolean;
   onClick?: () => void;
+  customLogoSrc?: string;
 }
+
 const Logo = ({
   variant = "default",
   showText = true,
@@ -17,7 +21,8 @@ const Logo = ({
   className,
   href = "/",
   logoOnly = false,
-  onClick
+  onClick,
+  customLogoSrc = "/lovable-uploads/02f7d6e9-c5dd-4d66-b4f0-06befa4a8e59.png"
 }: LogoProps) => {
   // Calculate text color based on variant
   let textColorClass = "text-primary";
@@ -57,25 +62,33 @@ const Logo = ({
     medium: "text-xl",
     large: "text-2xl"
   };
-  const logoContent = <>
-      <div className="">
+
+  const logoContent = (
+    <>
+      <div className={circleSize}>
         <svg width={width} height={height} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10">
-          <image href="/lovable-uploads/38ab295d-b8b5-46e1-8261-f552ca0cfb02.png" width="100" height="100" />
+          <image href={customLogoSrc} width="100" height="100" />
         </svg>
       </div>
-      {showText && !logoOnly && <div className={cn(`font-bold ${textColorClass}`)}>
-          <span className={textSizeMap[size]}>NIB Grande Circular
-      </span>
-        </div>}
-    </>;
+      {showText && !logoOnly && (
+        <div className={cn(`font-bold ${textColorClass}`)}>
+          <span className={textSizeMap[size]}>NIB Grande Circular</span>
+        </div>
+      )}
+    </>
+  );
+
   const containerClass = cn("flex items-center gap-2", className);
 
   // Render as clickable link or static div based on props
   if (logoOnly) {
     return <div className={containerClass} onClick={onClick}>{logoContent}</div>;
   }
-  return <Link to={href} className={containerClass} onClick={onClick}>
+  return (
+    <Link to={href} className={containerClass} onClick={onClick}>
       {logoContent}
-    </Link>;
+    </Link>
+  );
 };
+
 export default Logo;

@@ -8,13 +8,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-blue-900/50" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-lg text-center md:text-left">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-4 mb-6">
-            <Logo variant="white" size="large" showText={false} />
-            <div className="text-white">
-              <h2 className="text-3xl font-bold">NOVA IGREJA BATISTA</h2>
-              <p className="text-sm font-medium text-secondary">Igreja Batista Grande Circular</p>
-            </div>
-          </div>
+          
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Produtos e Recursos 2025
           </h1>

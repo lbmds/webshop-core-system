@@ -3,9 +3,10 @@ import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
 import { useAuth } from '@/contexts/AuthContext';
+import { toast } from "sonner";
 
 const AdminLayout = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, hasRole } = useAuth();
 
   if (isLoading) {
     return (
@@ -15,12 +16,17 @@ const AdminLayout = () => {
     );
   }
 
-  // Verificar se o usuário está autenticado
+  // Check if the user is authenticated
   if (!user) {
+    toast.error("Você precisa estar logado para acessar esta área");
     return <Navigate to="/auth" replace />;
   }
 
-  // Idealmente, verificaria também se o usuário tem papel de admin
+  // Check if user has admin role
+  if (!hasRole('admin')) {
+    toast.error("Você não tem permissão para acessar esta área");
+    return <Navigate to="/" replace />;
+  }
   
   return (
     <div className="flex h-screen bg-background">

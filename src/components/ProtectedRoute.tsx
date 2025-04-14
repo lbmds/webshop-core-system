@@ -1,3 +1,4 @@
+
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -7,7 +8,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, hasRole } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -20,8 +21,11 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  // For role-based access, you would need to implement additional logic here
-  // We'll keep it simple for now
+  // Check for required role if specified
+  if (requiredRole && !hasRole(requiredRole)) {
+    // Redirect to homepage if user doesn't have the required role
+    return <Navigate to="/" replace />;
+  }
 
   return <>{children}</>;
 };
